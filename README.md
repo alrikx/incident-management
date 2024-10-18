@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to your new project.
+Welcome to our SAP CAP demo project w/ CI/CD support.
 
 It contains these folders and files, following our recommended project layout:
 
