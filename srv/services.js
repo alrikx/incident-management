@@ -5,7 +5,7 @@ class ProcessorService extends cds.ApplicationService {
   init() {
     this.before("UPDATE", "Incidents", (req) => this.onUpdate(req));
     this.before("CREATE", "Incidents", (req) => this.changeUrgencyDueToSubject(req.data));
-    this.after("each", "Incidents", (incident) => { incident.title += ' changed' });
+    //this.after("each", "Incidents", (incident) => { incident.title += ' changed' });
 
     return super.init();
   }
