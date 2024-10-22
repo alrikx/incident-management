@@ -128,7 +128,7 @@ describe('Draft Choreography APIs', () => {
     expect(response.status).to.eql(204)
   })
 
-  it('- Demo Fail', async () => {
-    expect(1).to.eql(2)
-  })
+//  it('- Demo Fail', async () => {
+//    expect(1).to.eql(2)
+//  })
 })
