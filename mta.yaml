@@ -29,17 +29,7 @@ modules:
 - name: incident-management-app-deployer
   type: com.sap.application.content
   path: .
-  parameters:
-    config:
-        destinations:
-        - forwardAuthToken: true
-          name: incident-management-srv-api
-          url: ~{srv-api/srv-url}
-        - name: ui5
-          url: https://ui5.sap.com
   requires:
-  - name: srv-api
-  - name: incident-management-auth
   - name: incident-management-html5-repo-host
     parameters:
       content-target: true
@@ -56,10 +46,6 @@ modules:
   - name: incident-management-destination-service
     parameters:
       content-target: true
-  - name: incidents_html_repo_runtime
-    parameters:
-      service-key:
-        name: incidents-html5-app-runtime-service-key
   - name: incident-management-html5-repo-host
     parameters:
       service-key:
@@ -70,12 +56,17 @@ modules:
         name: incident-management-auth-key
   parameters:
     content:
-      subaccount:
+      instance:
         destinations:
-        - Name: incident-management_cdm
-          ServiceInstanceName: incidents-html5-app-runtime-service
-          ServiceKeyName: incidents-html5-app-runtime-service-key
-          URL: https://html5-apps-repo-rt.${default-domain}/applications/cdm/incidents
+        - Name: incidents_incident_management_html5_repo_host
+          ServiceInstanceName: incident-management-html5-repo-host
+          ServiceKeyName: incident-management-html5-repo-host-key
+          sap.cloud.service: incidents
+        - Authentication: OAuth2UserTokenExchange
+          Name: incidents_incident_management_auth
+          ServiceInstanceName: incident-management-auth
+          ServiceKeyName: incident-management-auth-key
+          sap.cloud.service: incidents
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true
@@ -109,30 +100,33 @@ resources:
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
-- name: incidents_html_repo_runtime
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: incidents-html5-app-runtime-service
-    service-plan: app-runtime
 - name: incident-management-destination-service
   type: org.cloudfoundry.managed-service
   parameters:
     config:
+      HTML5Runtime_enabled: true
       init_data:
-        subaccount:
+        instance:
           destinations:
           - Authentication: NoAuthentication
-            Name: incident-management-rt
+            Name: ui5
             ProxyType: Internet
             Type: HTTP
-            URL: https://5602d5e4trial.launchpad.${default-domain}
-            CEP.HTML5contentprovider: true
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: incident-management-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
     service-name: incident-management-destination-service
     service-plan: lite
+  requires:
+  - name: srv-api
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
@@ -143,4 +137,3 @@ build-parameters:
     - npm ci
     - npx cds build --production
     - mkdir -p resources 
-    - cp workzone/cdm.json resources/cdm.json
