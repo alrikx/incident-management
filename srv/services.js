@@ -5,6 +5,7 @@ class ProcessorService extends cds.ApplicationService {
   init() {
     this.before("UPDATE", "Incidents", (req) => this.onUpdate(req));
     this.before("CREATE", "Incidents", (req) => this.changeUrgencyDueToSubject(req.data));
+    //this.after("each", "Incidents", (incident) => { incident.title += ' changed' });
 
     return super.init();
   }
@@ -21,10 +22,11 @@ class ProcessorService extends cds.ApplicationService {
   }
 
   /** Custom Validation */
-  async onUpdate (req) {
-    const { status_code } = await SELECT.one(req.subject, i => i.status_code).where({ID: req.data.ID})
+  async onUpdate(req) {
+    const { status_code } = await SELECT.one(req.subject, i => i.status_code).where({ ID: req.data.ID })
     if (status_code === 'C')
       return req.reject(`Can't modify a closed incident`)
   }
+
 }
 module.exports = { ProcessorService }
