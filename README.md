@@ -12,6 +12,13 @@ File or Folder | Purpose
 `package.json` | project metadata and configuration
 `readme.md` | this getting started guide
 
+## Used SAP Tutorial
+
+Here you create an App e-2-e, I removed the setup in workzone and did manual deployment, because the scripted version was not working for me:
+https://discovery-center.cloud.sap/missiondetail/4327/4608/?tab=projectboard
+
+Setup of CTMS:
+https://community.sap.com/t5/technology-blogs-by-sap/how-to-integrate-sap-cloud-transport-management-into-your-ci-cd-pipeline/ba-p/13407521
 
 ## Next Steps
 
