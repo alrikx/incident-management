@@ -24,7 +24,7 @@
     "rimraf": "^5.0.5"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --coverageDirectory=cloudcitransfer/coverage",
     "start": "cds-serve",
     "watch-incidents": "cds watch --open incidents/webapp/index.html?sap-ui-xx-viewCache=false",
     "undeploy": "cf undeploy incident-management --delete-services --delete-service-keys --delete-service-brokers",
