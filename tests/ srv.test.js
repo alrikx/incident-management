@@ -124,9 +124,6 @@ describe('Draft Choreography APIs', () => {
   })
 
   it('- Delete the Incident', async () => {
-    const demo1 = 1
-    const demo2 = 2
-    const demo3 = 3
     const response = await DELETE(`/odata/v4/processor/Incidents(ID=${draftId},IsActiveEntity=true)`)
     expect(response.status).to.eql(204)
   })
