@@ -21,11 +21,10 @@
     "chai-as-promised": "^7.1.2",
     "chai-subset": "^1.6.0",
     "jest": "^29.7.0",
-    "jest-sonar-reporter": "^2.0.0",
     "rimraf": "^5.0.5"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "cds-serve",
     "watch-incidents": "cds watch --open incidents/webapp/index.html?sap-ui-xx-viewCache=false",
     "undeploy": "cf undeploy incident-management --delete-services --delete-service-keys --delete-service-brokers",
@@ -69,8 +68,5 @@
     "sql": {
       "native_hana_associations": false
     }
-  },
-  "jest": {
-    "testResultsProcessor": "jest-sonar-reporter"
   }
 }

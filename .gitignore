@@ -22,6 +22,7 @@ mta_archives/
 .DS_Store
 *.orig
 *.log
+coverage/
 
 *.iml
 *.flattened-pom.xml
@@ -32,4 +33,3 @@ mta_archives/
 
 # @cap-js/cds-typer
 @cds-models
-test-report.xml
