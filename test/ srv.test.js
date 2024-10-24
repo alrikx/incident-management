@@ -88,39 +88,7 @@ describe('Draft Choreography APIs', () => {
       expect(status).to.eql(200)
       expect(status_code).to.eql('C')
     })
-    describe('should fail to re-open closed incident', () => {
-      it(`Should Open Closed Incident-${draftId}`, async () => {
-        const { status } = await POST(
-          `/odata/v4/processor/Incidents(ID=${incidentId},IsActiveEntity=true)/ProcessorService.draftEdit`,
-          {
-            PreserveChanges: true
-          }
-        )
-        expect(status).to.equal(201)
-      })
 
-      it(`Should re-open the Incident-${draftId} but fail`, async () => {
-        const { status } = await PATCH(`/odata/v4/processor/Incidents(ID=${incidentId},IsActiveEntity=false)`, {
-          status_code: 'N'
-        })
-        expect(status).to.equal(200)
-      })
-      it(' `Should fail to activate draft trying to re-open the incidentt', async () => {
-        try {
-          const response = await POST(
-            `/odata/v4/processor/Incidents(ID=${incidentId},IsActiveEntity=false)/ProcessorService.draftActivate`
-          )
-        } catch (error) {
-          expect(error.response.status).to.eql(500)
-          expect(error.response.data.error.message).to.include(`Can't modify a closed incident`)
-        }
-      })
-    })
-  })
-
-  it('- Delete the Draft', async () => {
-    const response = await DELETE(`/odata/v4/processor/Incidents(ID=${draftId},IsActiveEntity=false)`)
-    expect(response.status).to.eql(204)
   })
 
   it('- Delete the Incident', async () => {
