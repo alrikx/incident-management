@@ -5,7 +5,13 @@ class ProcessorService extends cds.ApplicationService {
   init() {
     this.before("UPDATE", "Incidents", (req) => this.onUpdate(req));
     this.before("CREATE", "Incidents", (req) => this.changeUrgencyDueToSubject(req.data));
+    this.after("each", "Incidents", (incident) => { 
+      var x = 2;  
+      var y = 'ABC';
+      var x = x + y;
+      incident.title += '🚩';
 
+    });  
     return super.init();
   }
 
