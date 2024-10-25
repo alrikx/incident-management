@@ -7,7 +7,7 @@ class ProcessorService extends cds.ApplicationService {
     this.before("UPDATE", "Incidents", (req) => this.onUpdate(req));
     this.before("CREATE", "Incidents", (req) => this.changeUrgencyDueToSubject(req.data));
     this.after("each", "Incidents", (incident) => {
-      var lowerTitle = incident.title.toLowerCase();
+      const lowerTitle = incident.title.toLowerCase();
       if (lowerTitle.includes('flag')) {  
         incident.title += `🚩`;
       }  
@@ -38,7 +38,6 @@ class ProcessorService extends cds.ApplicationService {
   async onUpdate(req) {
     const { status_code } = await SELECT.one(req.subject, i => i.status_code).where({ ID: req.data.ID })
     if (status_code === 'C') {
-      var x = 1;
       console.log(req.data.ID + ` cant be changed, because status is closed`);
       return req.reject(`Can't modify a closed incident`)
     }
