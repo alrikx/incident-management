@@ -17,7 +17,7 @@ class ProcessorService extends cds.ApplicationService {
       } 
 
       if (lowerTitle.includes('inverter')) {  
-        incident.title += `🧯`;
+        incident.title += `🪵`;
       } 
 
       if (lowerTitle.includes('sunny')) {  
