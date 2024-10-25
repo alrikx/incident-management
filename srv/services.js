@@ -20,6 +20,10 @@ class ProcessorService extends cds.ApplicationService {
         incident.title += `🧯`;
       } 
 
+      if (lowerTitle.includes('sunny')) {  
+        incident.title += `🕶️`;
+      } 
+
     });
     return super.init();
   }
