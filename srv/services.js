@@ -1,3 +1,4 @@
+const { log } = require('@sap/cds');
 const cds = require('@sap/cds')
 
 class ProcessorService extends cds.ApplicationService {
@@ -5,9 +6,9 @@ class ProcessorService extends cds.ApplicationService {
   init() {
     this.before("UPDATE", "Incidents", (req) => this.onUpdate(req));
     this.before("CREATE", "Incidents", (req) => this.changeUrgencyDueToSubject(req.data));
-    this.after("each", "Incidents", (incident) => { 
+    this.after("each", "Incidents", (incident) => {
       incident.title += '🚩';
-    });  
+    });
     return super.init();
   }
 
@@ -22,11 +23,13 @@ class ProcessorService extends cds.ApplicationService {
     }
   }
 
-  async onUpdate (req) {
-    const { status_code } = await SELECT.one(req.subject, i => i.status_code).where({ID: req.data.ID})
-    if (status_code === 'C')
+  async onUpdate(req) {
+    const { status_code } = await SELECT.one(req.subject, i => i.status_code).where({ ID: req.data.ID })
+    if (status_code === 'C') {
+      var x = 1;
+      log(req.data.ID + ' cant be changed, because status is ');
       return req.reject(`Can't modify a closed incident`)
+    }
   }
-
 }
 module.exports = { ProcessorService }
