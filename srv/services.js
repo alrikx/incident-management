@@ -21,7 +21,7 @@ class ProcessorService extends cds.ApplicationService {
       } 
 
       if (lowerTitle.includes('sunny')) {  
-        incident.title += `🕶️`;
+        incident.title += `SAP`;
       } 
 
     });
