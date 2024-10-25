@@ -12,12 +12,12 @@ class ProcessorService extends cds.ApplicationService {
         incident.title += `🚩`;
       }  
 
-      if (incident.title.includes('solar')) {  
+      if (lowerTitle.includes('solar')) {  
         incident.title += `☀️`;
       } 
 
-      if (incident.title.includes('account')) {  
-        incident.title += `🔑`;
+      if (lowerTitle.includes('inverter')) {  
+        incident.title += `🧯`;
       } 
 
     });
