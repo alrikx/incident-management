@@ -19,6 +19,7 @@ class ProcessorService extends cds.ApplicationService {
       } 
       if (lowerTitle.includes('account')) {  
         incident.title += `👩‍🔧`;
+        let x = 2;
       } 
     });
     return super.init();
