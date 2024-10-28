@@ -20,6 +20,17 @@ class ProcessorService extends cds.ApplicationService {
         incident.title += `🧯`;
       } 
 
+    var x = 0.
+
+    if (x = 1)
+    {
+      x = 1
+    }else{
+      while(x = 3){
+        x = 3.
+      }
+    }
+
     });
     return super.init();
   }
