@@ -20,6 +20,8 @@ class ProcessorService extends cds.ApplicationService {
         incident.title += `🧯`;
       } 
 
+      x = 1;
+
     });
     return super.init();
   }
