@@ -11,15 +11,15 @@ class ProcessorService extends cds.ApplicationService {
       if (lowerTitle.includes('flag')) {  
         incident.title += `🚩`;
       }  
-
       if (lowerTitle.includes('solar')) {  
         incident.title += `☀️`;
       } 
-
       if (lowerTitle.includes('inverter')) {  
         incident.title += `🧯`;
       } 
-
+      if (lowerTitle.includes('account')) {  
+        incident.title += `👩‍🔧`;
+      } 
     });
     return super.init();
   }
