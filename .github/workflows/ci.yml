@@ -47,6 +47,5 @@ jobs:
       - uses: SAP/project-piper-action@main
         with:
           step-name: tmsUpload
-          flags: '--nodeName testaccount --mtaPath ./mta_archives/app.mtar --credentialsId ctms'
-        env:
-          ctms: ${{ secrets.CTMS }}
+          flags: "--nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }}"
+
