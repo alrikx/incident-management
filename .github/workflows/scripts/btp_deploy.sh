@@ -18,10 +18,10 @@ cf install-plugin html5-plugin -f
 echo '############## Build ##############'
 npx mbt build --mtar app.mtar
 
-echo '############## Authorizations ##############'
-cf api $cf_api_url
-cf auth $cf_user "$cf_password"
+#echo '############## Authorizations ##############'
+#cf api $cf_api_url
+#cf auth $cf_user "$cf_password"
 
-echo '############## Deploy ##############'
-cf target -o $cf_org -s $cf_space
-cf deploy mta_archives/app.mtar -f
+#echo '############## Deploy ##############'
+#cf target -o $cf_org -s $cf_space
+#cf deploy mta_archives/app.mtar -f
