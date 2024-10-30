@@ -43,3 +43,10 @@ jobs:
           cf_org: ${{vars.CF_ORG}}
           cf_space: ${{vars.CF_SPACE}}
         run: ./.github/workflows/scripts/btp_deploy.sh
+
+      - uses: SAP/project-piper-action@main
+        with:
+          step-name: tmsUpload
+          flags: '--nodeName testaccount --mtaPath ./mta_archives/app.mtar --credentialsId ctms'
+        env:
+          ctms: ${{ secrets.CTMS }}
