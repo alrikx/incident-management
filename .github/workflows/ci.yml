@@ -1,5 +1,5 @@
 name: CI Pipeline for Main
-run-name: ${{ github.actor }} started CI in  🚀
+run-name: ${{ github.actor }} started CI 🚀
 on:
   workflow_dispatch:
   push:
