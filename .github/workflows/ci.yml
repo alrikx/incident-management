@@ -44,8 +44,22 @@ jobs:
           cf_space: ${{vars.CF_SPACE}}
         run: ./.github/workflows/scripts/btp_deploy.sh
 
-      - uses: SAP/project-piper-action@main
+      - id: ctms_upload
+        name: Handover to cTMS
+        uses: SAP/project-piper-action@main
         with:
           step-name: tmsUpload
-          flags: "--nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }}"
+          flags: --nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }}
 
+      - uses: neonidian/teams-notify-build-status@v3
+        with:
+          webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
+          title: Ended Pipeline                                      # Specify a title header
+          titleBackgroundColor: ${{ steps.ctms_upload.outcome }}    # Specify title background color. 'unitTest' is the ID of a step
+          status: ${{ steps.ctms_upload.outcome }}                  # Specify what should be displayed in the status label
+          message: >-
+            This is a test
+        env:                                                     # Enable actor labels and buttons using environment variables
+          SHOULD_DISPLAY_ACTOR_LABEL: true
+          SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
+          SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
