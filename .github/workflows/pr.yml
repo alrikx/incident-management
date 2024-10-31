@@ -33,4 +33,4 @@ jobs:
       with:
         args: >
           -Dsonar.pullrequest.key=${{ github.event.number }}
-          -Dsonar.verbose=true
+
