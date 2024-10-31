@@ -53,7 +53,7 @@ jobs:
           gh_msg: ${{ github.event.head_commit.message }}
           gh_id: ${{ github.event.head_commit.id }}
         run: ./.github/workflows/scripts/determine_ctms_msg.sh
-
+ 
       - name: Demo Output
         run: echo "${{ env.CONCAT_MSG }}"
  
