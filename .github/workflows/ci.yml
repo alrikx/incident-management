@@ -63,7 +63,7 @@ jobs:
           echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
                 
       - name: Confirm git commit ctms msg output
-        run: echo ${{ env.COMMIT_CTMS }}    
+        run: echo ${{ env.COMMIT_CTMS }} 
 
       - name: cut the commit message if to long
         id: ctms_msg_completed
