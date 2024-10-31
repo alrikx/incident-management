@@ -52,9 +52,15 @@ jobs:
         run: |
           calculatedSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+          msg=${{ github.event.head_commit.message }}
+          echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
+          
       
       - name: Confirm git commit SHA output
         run: echo ${{ env.COMMIT_SHORT_SHA }}
+
+      - name: Confirm git commit ctms msg output
+        run: echo ${{ env.COMMIT_CTMS }}
 
       - id: ctms_upload
         name: Handover to cTMS
@@ -65,7 +71,7 @@ jobs:
             --nodeName testaccount
             --mtaPath ./mta_archives/app.mtar
             --serviceKey ${{ secrets.CTMS }}
-            --customDescription '${{ env.COMMIT_SHORT_SHA }} - test'
+            --customDescription '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}'
             --namedUser ${{ github.actor }}
             --verbose
           #${{ github.event.head_commit.message }}
