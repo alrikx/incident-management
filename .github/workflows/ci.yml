@@ -52,7 +52,7 @@ jobs:
         run: |
           calculatedSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-          msg=${{ github.event.head_commit.message }}
+          msg=$(echo '${{ github.event.head_commit.message }}')
           echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
           
       
