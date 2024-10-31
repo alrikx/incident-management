@@ -57,7 +57,7 @@ jobs:
       - name: Demo Output
         run: echo "${{ env.CONCAT_MSG }}"
  
-
+ 
         # Calculation of the short SHA, to use it in ctms, technically its not required, we just what to have the same message like from BTP CI/CD srv
         # Code from https://dev.to/hectorleiva/github-actions-and-creating-a-short-sha-hash-8b7
       #- name: Set short git commit SHA
