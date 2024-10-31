@@ -48,19 +48,28 @@ jobs:
         # Calculation of the short SHA, to use it in ctms, technically its not required, we just what to have the same message like from BTP CICD
         #Code from https://dev.to/hectorleiva/github-actions-and-creating-a-short-sha-hash-8b7
       - name: Set short git commit SHA
-        id: vars
+        id: short_sha
         run: |
           calculatedSha=$(git rev-parse --short ${{ github.sha }})
           echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-          msg=$(echo '${{ github.event.head_commit.message }}')
-          echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
-          
-      
+        
       - name: Confirm git commit SHA output
         run: echo ${{ env.COMMIT_SHORT_SHA }}
-
+          
+      - name: replace withspace by underscore in commit msg.
+        id: ctms_msg
+        run: |        
+          msg=$(echo '${{ github.event.head_commit.message }}')
+          echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
+                
       - name: Confirm git commit ctms msg output
-        run: echo ${{ env.COMMIT_CTMS }}
+        run: echo ${{ env.COMMIT_CTMS }}    
+
+      - name: cut the commit message if to long
+        id: ctms_msg_completed
+        run: |        
+          CONCAT_MSG_TMP=$(echo '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}')
+          CONCAT_MSG=$(echo '$CONCAT_MSG_TMP' | cut -c 1-512) >> $GITHUB_ENV
 
       - id: ctms_upload
         name: Handover to cTMS
@@ -71,7 +80,7 @@ jobs:
             --nodeName testaccount
             --mtaPath ./mta_archives/app.mtar
             --serviceKey ${{ secrets.CTMS }}
-            --customDescription ${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}
+            --customDescription ${{ env.CONCAT_MSG }}
             --namedUser ${{ github.actor }}
             --verbose
           #${{ github.event.head_commit.message }}
