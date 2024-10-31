@@ -56,10 +56,14 @@ jobs:
         with:
           webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
           title: Build of was successful!                                      # Specify a title header
-          titleBackgroundColor: ${{ steps.ctms_upload.outcome }}    # Specify title background color. 'unitTest' is the ID of a step
-          status: ${{ steps.ctms_upload.outcome }}                  # Specify what should be displayed in the status label
-          message: >-
-            Commit: ${{ github.event.head_commit.id }} - ${{ github.event.head_commit.message }} by ${{ github.event.head_commit.author }} Status: ${{ job.status }} Repo: ${{ github.repository }} Branch: ${{ github.ref }}
+          titleBackgroundColor: ${{ job.status }}    # Specify title background color. 'unitTest' is the ID of a step
+          status: ${{ job.status }}                  # Specify what should be displayed in the status label
+          message: |
+            Repo: ${{ github.repository }} 
+            Branch: ${{ github.ref }}
+            Commit: ${{ github.event.head_commit.id }}
+            Message: ${{ github.event.head_commit.message }} 
+            by ${{ github.event.head_commit.author.name }} 
         env:                                                     # Enable actor labels and buttons using environment variables
           SHOULD_DISPLAY_ACTOR_LABEL: true
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
