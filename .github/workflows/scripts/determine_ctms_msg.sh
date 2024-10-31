@@ -2,14 +2,8 @@
 set -e
 
 #calc short sha
-#calculatedSha=$(git rev-parse --short $gh_id)
-#echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
-
-
-calculatedSha='123345456'
-gh_msg="Test \n tets 2"
-
-echo $gh_msg
+calculatedSha=$(git rev-parse --short $gh_id)
+echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
 
 #remove linebreaks
 STAGE1=$(echo $gh_msg | tr -d '\n')
