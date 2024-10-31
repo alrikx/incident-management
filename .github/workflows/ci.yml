@@ -49,7 +49,7 @@ jobs:
         uses: SAP/project-piper-action@main
         with:
           step-name: tmsUpload
-          flags: --nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }} --customXDescription 123
+          flags: --nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }} --customDescription 123 --namedUser ${{ github.actor }}
           #${{ github.event.head_commit.message }}
       
       - uses: neonidian/teams-notify-build-status@v3
