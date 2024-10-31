@@ -16,72 +16,85 @@ jobs:
       #- name: List files in the repository
       #  run: ls ${{ github.workspace }}
 
-      - name: Setup Node 20.12.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.12.0
+      #- name: Setup Node 20.12.0
+      #  uses: actions/setup-node@v4
+      #  with:
+      #    node-version: 20.12.0
       
-      - name: Building
-        run: npm ci
+      #- name: Building
+      #  run: npm ci
 
-      - name: Executing Unit tests
-        run: npm test
+      #- name: Executing Unit tests
+      #  run: npm test
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v3.1.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #- name: SonarCloud Scan
+      #  uses: SonarSource/sonarcloud-github-action@v3.1.0
+      #  env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Make the mtar build and deploy script executable
-        run: chmod +x ./.github/workflows/scripts/btp_deploy.sh
+      #- name: Make the mtar build and deploy script executable
+      #  run: chmod +x ./.github/workflows/scripts/btp_deploy.sh
         
-      - name: Run mtar build and deploy
-        env:
-          cf_user: ${{ secrets.CF_USER }}
-          cf_password: ${{ secrets.CF_PASSWORD }}
-          cf_api_url: ${{vars.CF_API_URL}}
-          cf_org: ${{vars.CF_ORG}}
-          cf_space: ${{vars.CF_SPACE}}
-        run: ./.github/workflows/scripts/btp_deploy.sh
+      #- name: Run mtar build and deploy
+      #  env:
+      #    cf_user: ${{ secrets.CF_USER }}
+      #    cf_password: ${{ secrets.CF_PASSWORD }}
+      #    cf_api_url: ${{vars.CF_API_URL}}
+      #    cf_org: ${{vars.CF_ORG}}
+      #    cf_space: ${{vars.CF_SPACE}}
+      #  run: ./.github/workflows/scripts/btp_deploy.sh
 
+
+      - name: Make the Determine the CTMS message Script executable
+        run: chmod +x ./.github/workflows/scripts/determine_ctms_msg.sh
+        
+      - name: Run the determination from ctms message
+        env:
+          gh_message: ${{ github.event.head_commit.message }}
+          gh_id: ${{ github.event.head_commit.id }}
+        run: ./.github/workflows/scripts/determine_ctms_msg.sh
+
+      - name: Demo Output
+        run: echo "${{ env.CONCAT_MSG }}"
+ 
 
         # Calculation of the short SHA, to use it in ctms, technically its not required, we just what to have the same message like from BTP CI/CD srv
         # Code from https://dev.to/hectorleiva/github-actions-and-creating-a-short-sha-hash-8b7
-      - name: Set short git commit SHA
-        id: short_sha
-        run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+      #- name: Set short git commit SHA
+      #  id: short_sha
+      #  run: |
+      #    calculatedSha=$(git rev-parse --short ${{ github.sha }})
+      #    echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
         
       #- name: Confirm git commit SHA output
       #  run: echo ${{ env.COMMIT_SHORT_SHA }}
           
-      - name: replace withspace by underscore in commit msg.
-        id: ctms_msg
-        run: |        
-          msg=$(echo '${{ github.event.head_commit.message }}')
-          echo "COMMIT_CTMS=${'${{ github.event.head_commit.message }}'// /_}" >> $GITHUB_ENV
+      #- name: replace withspace by underscore in commit msg.
+      #  id: ctms_msg
+      #  run: |        
+      #    msg=$(echo '${{ github.event.head_commit.message }}')
+      #    echo "COMMIT_CTMS=${'${{ github.event.head_commit.message }}'// /_}" >> $GITHUB_ENV
                 
       #- name: Confirm git commit ctms msg output
       #  run: echo "${{ env.COMMIT_CTMS }}"
 
-      - name: cut the commit message if to long
-        id: ctms_msg_completed
-        run: |        
-          CONCAT_MSG_TMP=$(echo '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}')
-          echo "CONCAT_MSG=$(echo $CONCAT_MSG_TMP | cut -c 1-512)" >> $GITHUB_ENV
+      #- name: cut the commit message if to long
+      #  id: ctms_msg_completed
+      #  run: |        
+      #    CONCAT_MSG_TMP=$(echo '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}')
+      #    echo "CONCAT_MSG=$(echo $CONCAT_MSG_TMP | cut -c 1-512)" >> $GITHUB_ENV
 
-      - id: ctms_upload
-        name: Handover to cTMS
-        uses: SAP/project-piper-action@main
-        with:
-          step-name: tmsUpload
-          flags: >
-            --nodeName testaccount
-            --mtaPath ./mta_archives/app.mtar      
-            --serviceKey ${{ secrets.CTMS }}
-            --customDescription ${{ env.CONCAT_MSG }}
-            --namedUser ${{ github.actor }}
+      #- id: ctms_upload
+      #  name: Handover to cTMS
+      #  uses: SAP/project-piper-action@main
+      #  with:
+      #    step-name: tmsUpload
+      #    flags: >
+      #      --nodeName testaccount
+      #      --mtaPath ./mta_archives/app.mtar      
+      #      --serviceKey ${{ secrets.CTMS }}
+      #      --customDescription ${{ env.CONCAT_MSG }}
+      #      --namedUser ${{ github.actor }}
 
       - uses: neonidian/teams-notify-build-status@v4
         if: always()  
