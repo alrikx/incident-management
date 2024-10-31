@@ -84,18 +84,18 @@ jobs:
       #    CONCAT_MSG_TMP=$(echo '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}')
       #    echo "CONCAT_MSG=$(echo $CONCAT_MSG_TMP | cut -c 1-512)" >> $GITHUB_ENV
 
-      #- id: ctms_upload
-      #  name: Handover to cTMS
-      #  uses: SAP/project-piper-action@main
-      #  with:
-      #    step-name: tmsUpload
-      #    flags: >
-      #      --nodeName testaccount
-      #      --mtaPath ./mta_archives/app.mtar      
-      #      --serviceKey ${{ secrets.CTMS }}
-      #      --customDescription ${{ env.CONCAT_MSG }}
-      #      --namedUser ${{ github.actor }}
-
+      - id: ctms_upload
+        name: Handover to cTMS
+        uses: SAP/project-piper-action@main
+        with:
+          step-name: tmsUpload
+          flags: >
+            --nodeName testaccount
+            --mtaPath ./incident-management_1.0.0.mtar
+            --serviceKey ${{ secrets.CTMS }}
+            --customDescription ${{ env.CONCAT_MSG }}
+            --namedUser ${{ github.actor }}
+     #      --mtaPath ./mta_archives/app.mtar 
       - uses: neonidian/teams-notify-build-status@v4
         if: always()  
         with:
