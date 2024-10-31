@@ -60,7 +60,7 @@ jobs:
         id: ctms_msg
         run: |        
           msg=$(echo '${{ github.event.head_commit.message }}')
-          echo "COMMIT_CTMS=${msg// /_}" >> $GITHUB_ENV
+          echo "COMMIT_CTMS=${'${{ github.event.head_commit.message }}'// /_}" >> $GITHUB_ENV
                 
       #- name: Confirm git commit ctms msg output
       #  run: echo "${{ env.COMMIT_CTMS }}"
