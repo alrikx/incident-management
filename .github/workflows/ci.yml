@@ -52,14 +52,14 @@ jobs:
           flags: --nodeName testaccount --mtaPath ./mta_archives/app.mtar --serviceKey ${{ secrets.CTMS }} --customDescription 123 --namedUser ${{ github.actor }}
           #${{ github.event.head_commit.message }}
       
-      - uses: neonidian/teams-notify-build-status@v3
+      - uses: neonidian/teams-notify-build-status@v4
         with:
           webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
-          title: Ended Pipeline                                      # Specify a title header
+          title: Build of was successful!                                      # Specify a title header
           titleBackgroundColor: ${{ steps.ctms_upload.outcome }}    # Specify title background color. 'unitTest' is the ID of a step
           status: ${{ steps.ctms_upload.outcome }}                  # Specify what should be displayed in the status label
           message: >-
-            This is a test
+            Commit: ${{ github.event.head_commit.id }} - ${{ github.event.head_commit.message }} by ${{ github.event.head_commit.author }} Status: ${{ job.status }} Repo: ${{ github.repository }} Branch: ${{ github.ref }}
         env:                                                     # Enable actor labels and buttons using environment variables
           SHOULD_DISPLAY_ACTOR_LABEL: true
           SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
