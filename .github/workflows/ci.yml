@@ -50,7 +50,7 @@ jobs:
         
       - name: Run the determination from ctms message
         env:
-          gh_message: ${{ github.event.head_commit.message }}
+          gh_msg: ${{ github.event.head_commit.message }}
           gh_id: ${{ github.event.head_commit.id }}
         run: ./.github/workflows/scripts/determine_ctms_msg.sh
 
