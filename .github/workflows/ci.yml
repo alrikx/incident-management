@@ -69,7 +69,7 @@ jobs:
         id: ctms_msg_completed
         run: |        
           CONCAT_MSG_TMP=$(echo '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}')
-          echo "CONCAT_MSG=$(echo '$CONCAT_MSG_TMP' | cut -c 1-512)" >> $GITHUB_ENV
+          echo "CONCAT_MSG=$(echo $CONCAT_MSG_TMP | cut -c 1-512)" >> $GITHUB_ENV
 
       - id: ctms_upload
         name: Handover to cTMS
