@@ -53,6 +53,7 @@ jobs:
           #${{ github.event.head_commit.message }}
       
       - uses: neonidian/teams-notify-build-status@v4
+        if: always()  
         with:
           webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL_1 }}
           title: Build of "${{ github.event.head_commit.message }}" has finished!                                      # Specify a title header
