@@ -82,7 +82,7 @@ jobs:
             --serviceKey ${{ secrets.CTMS }}
             --customDescription ${{ env.CONCAT_MSG }}
             --namedUser ${{ github.actor }}
-            --verbose
+            --verbose 
           #${{ github.event.head_commit.message }}
           #--mtaPath ./mta_archives/app.mtar      
       - uses: neonidian/teams-notify-build-status@v4
