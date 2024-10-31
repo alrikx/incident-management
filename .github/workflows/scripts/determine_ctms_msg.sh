@@ -10,12 +10,10 @@ STAGE1=$(echo $gh_msg | tr -d '\n')
 echo "stage1"
 echo $STAGE1
 
-
 #remove whitespaces
 STAGE2=${STAGE1// /_}
 echo "stage2"
 echo $STAGE2
-
 
 CONCAT_MSG_TMP=$(echo "$calculatedSha-$STAGE2")
 echo  $CONCAT_MSG_TMP
