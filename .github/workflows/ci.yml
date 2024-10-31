@@ -71,7 +71,7 @@ jobs:
             --nodeName testaccount
             --mtaPath ./mta_archives/app.mtar
             --serviceKey ${{ secrets.CTMS }}
-            --customDescription '${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}'
+            --customDescription ${{ env.COMMIT_SHORT_SHA }}-${{ env.COMMIT_CTMS }}
             --namedUser ${{ github.actor }}
             --verbose
           #${{ github.event.head_commit.message }}
