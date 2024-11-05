@@ -4,8 +4,9 @@ on:
   pull_request:
     types: [opened, reopened]
     branches:  
-      - main-github-actions 
+      - main-github-actions
 
+#needed for the Test Report step to update the PR
 permissions:
   contents: read
   actions: read
@@ -33,7 +34,7 @@ jobs:
     - name: Executing Unit tests
       run: npm test
 
-    - name: Test Report
+    - name: Upload Test Report to PR
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
@@ -41,6 +42,8 @@ jobs:
         path: cloudcitransfer/junit/jest-*.xml    # Path to test results
         reporter: jest-junit        # Format of test results
 
+    #unfixed if dependabot runs the PR check, it cant access sonar token
+    # https://github.com/dependabot/dependabot-core/issues/3253
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v3.1.0
       env:
@@ -48,4 +51,3 @@ jobs:
       with:
         args: >
           -Dsonar.pullrequest.key=${{ github.event.number }}
-
