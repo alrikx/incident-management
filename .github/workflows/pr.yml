@@ -5,8 +5,15 @@ on:
     types: [opened, reopened]
     branches:  
       - main-github-actions 
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
   pull-request-voting:
+    #permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - name: Check out repository code
