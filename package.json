@@ -21,15 +21,25 @@
     "chai-as-promised": "^7.1.2",
     "chai-subset": "^1.6.0",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "rimraf": "^5.0.5"
   },
   "scripts": {
-    "test": "jest --coverage --coverageDirectory=cloudcitransfer/coverage",
+    "test": "jest --coverage --coverageDirectory=cloudcitransfer/coverage --reporters=default --reporters=jest-junit",
     "start": "cds-serve",
     "watch-incidents": "cds watch --open incidents/webapp/index.html?sap-ui-xx-viewCache=false",
     "undeploy": "cf undeploy incident-management --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+  },
+  "jest-junit": {
+    "outputDirectory": "cloudcitransfer/junit",
+    "outputName": "jest-junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
   },
   "sapux": [
     "app/incidents"
