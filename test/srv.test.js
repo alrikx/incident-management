@@ -40,7 +40,7 @@ describe('Draft Choreography APIs', () => {
 
   it('Create an incident ', async () => {
     const { status, statusText, data } = await POST(`/odata/v4/processor/Incidents`, {
-      title: 'Urgent attention required ! flag solar inverter account autumn',
+      title: 'Urgent attention required ! flag solar inverter account autumn winter',
       status_code: 'N'
     })
     draftId = data.ID

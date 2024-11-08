@@ -23,6 +23,9 @@ class ProcessorService extends cds.ApplicationService {
       if (lowerTitle.includes('autumn')) {  
         incident.title += `🍂🍂🍂`;
       }
+      if (lowerTitle.includes('winter')) {  
+        incident.title += `⛄⛄⛄`;
+      }
     });
     return super.init();
   }
