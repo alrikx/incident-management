@@ -7,9 +7,5 @@
     // "csv (semicolon)",
     // "tab",
     // "tsv"
-  ],
-  "sonarlint.connectedMode.project": {
-    "connectionId": "alrikx",
-    "projectKey": "alrikx_incident-management"
-  }
+  ]
 }

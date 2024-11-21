@@ -20,6 +20,14 @@ class ProcessorService extends cds.ApplicationService {
       if (lowerTitle.includes('account')) {  
         incident.title += `🎉🎉`;
       } 
+      if (lowerTitle.includes('car')) {  
+        incident.title += `🏎️`;
+        let y = 2;
+      } 
+      if (lowerTitle.includes('tree')) {  
+        incident.title += `🌳`;
+        let y = 2;
+      } 
     });
     return super.init();
   }
